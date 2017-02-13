@@ -1,0 +1,82 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package envioerros;
+
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Properties;
+
+/**
+ *
+ * @author gmarcos
+ */
+public class EnviaEmail {
+
+    EmailAttachment anexo1 = new EmailAttachment();
+    MultiPartEmail email = new MultiPartEmail();
+
+    public void enviaEmailComAnexo(String corpoemail, String categoria, String nome)
+            throws EmailException, IOException {
+
+        Date dataAtual = new Date();
+
+        SimpleDateFormat dtl = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat hr = new SimpleDateFormat("HH:mm:ss");
+
+        String imap = "";
+        String para = "";
+        String paraNome = "";
+
+        
+
+        this.email.setMsg("Olá!"
+                + "\n"
+                + "\n"
+                + "Operador: " + nome
+                + "\n"
+                + "Categoria do Problema: " + categoria
+                + "\n"
+                + "\n"
+                + "Descrição do problema: "
+                + "\n"
+                + corpoemail);
+
+        this.email.setHostName();
+        this.email.addTo(para, paraNome);
+//        this.email.addCc(cc1, ccNome1);
+
+        this.email.setFrom("marcos@jrmae.com.br", ("Mensageiro -" + dataAtual));
+        this.email.setSubject("Mensageiro: [" + dtl.format(dataAtual) + " - " + hr.format(dataAtual) + "]");
+
+        this.email.setAuthentication("email", "password");
+        this.email.setSmtpPort(587);
+
+        this.email.send();
+    
+    }
+
+    public MultiPartEmail getEmail() {
+        return this.email;
+    }
+
+    public void setEmail(MultiPartEmail email) {
+        this.email = email;
+    }
+
+    public EmailAttachment getAnexo1() {
+        return this.anexo1;
+    }
+
+    public void setAnexo1(EmailAttachment anexo1) {
+        this.anexo1 = anexo1;
+    }
+
+    public void enviaEmailComAnexo(String operador) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+}
